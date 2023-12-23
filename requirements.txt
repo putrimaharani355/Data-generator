@@ -1,4 +1,4 @@
 streamlit 
-json
+jsons
 google-generativeai
 pandas
