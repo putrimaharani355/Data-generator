@@ -4,6 +4,7 @@ import google.generativeai as genai
 import pandas as pd
 from io import StringIO
 import json
+import streamlit as st
 
 genai.configure(api_key="AIzaSyCLFuWZiNKwnScFFSplgAL_yhN3G2SOHzM")
 
@@ -18,11 +19,7 @@ defaults = {
   'safety_settings': [{"category":"HARM_CATEGORY_DEROGATORY","threshold":"BLOCK_LOW_AND_ABOVE"},{"category":"HARM_CATEGORY_TOXICITY","threshold":"BLOCK_LOW_AND_ABOVE"},{"category":"HARM_CATEGORY_VIOLENCE","threshold":"BLOCK_MEDIUM_AND_ABOVE"},{"category":"HARM_CATEGORY_SEXUAL","threshold":"BLOCK_MEDIUM_AND_ABOVE"},{"category":"HARM_CATEGORY_MEDICAL","threshold":"BLOCK_MEDIUM_AND_ABOVE"},{"category":"HARM_CATEGORY_DANGEROUS","threshold":"BLOCK_MEDIUM_AND_ABOVE"}],
 }
 
-import streamlit as st
-
-# Your text generation function (replace this with your actual implementation)
 def generate_text(prompt):
-    # Replace this function with your text generation logic
     return f"Generated text for prompt: {prompt}"
 
 def generate_prompt(format_option, user_input):
@@ -89,14 +86,13 @@ def main():
             )
         elif format_option == "JSON" :
 
-            json_content = generated_result.replace('```', '').replace('```', '').strip()
+            json_content = generated_result.replace('```json', '').replace('```', '').strip()
             try:
                 # Try to parse and display JSON content
-                st.json(json_content, expanded=True)
+                st.json(json.loads(json_content), expanded=True)
             
             except json.JSONDecodeError as e:
-                # If an error occurs, display the original content with st.write
-                st.error(f"Error decoding JSON: {e}")
+                print("Invalid JSON syntax:", e)
                 st.write("Original content:")
                 st.write(generated_result)
 
