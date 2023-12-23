@@ -90,14 +90,23 @@ def main():
         elif format_option == "JSON" :
 
             json_content = generated_result.replace('```', '').replace('```', '').strip()
-            st.json(json_content, expanded=True)
+            try:
+                # Try to parse and display JSON content
+                st.json(json_content, expanded=True)
+            
+            except json.JSONDecodeError as e:
+                # If an error occurs, display the original content with st.write
+                st.error(f"Error decoding JSON: {e}")
+                st.write("Original content:")
+                st.write(generated_result)
+
             st.sidebar.download_button(
                 label="Download JSON",
                 file_name="data.json",
                 mime="application/json",
                 data=generated_result,
             )
-            st.write(generated_result)
+            
         elif format_option == "TXT" :
             st.write(generated_result)
             st.sidebar.download_button('Download TXT', generated_result)
