@@ -1,6 +1,5 @@
 # import streamlit as st
 
-pip install google-genai
 from google import genai
 import pandas as pd
 from io import StringIO
