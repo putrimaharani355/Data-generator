@@ -12,9 +12,7 @@ def generate_text(prompt):
     return f"Generated text for prompt: {prompt}"
 
 def generate_prompt(format_option, user_input):
-    prompt = f"""input ({format_option}): {user_input}
-    output:"""
-    return prompt
+    return f"{user_input} and provide only the structured {format_option} data without explanations"
 
 def save_output_to_file(output, file_path):
     try:
@@ -48,7 +46,7 @@ def main():
         prompt = generate_prompt(format_option, user_input)
         response = client.models.generate_content(
           model="gemini-2.0-flash",
-          contents="give 10 data about scientist",
+          contents=prompt,
         )
       
         generated_result = response.text
