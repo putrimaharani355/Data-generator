@@ -1,23 +1,13 @@
 # import streamlit as st
 
-import google.generativeai as genai
+pip install google-genai
+from google import genai
 import pandas as pd
 from io import StringIO
 import json
 import streamlit as st
 
-genai.configure(api_key="AIzaSyCLFuWZiNKwnScFFSplgAL_yhN3G2SOHzM")
-
-defaults = {
-  'model': 'models/text-bison-001',
-  'temperature': 0.7,
-  'candidate_count': 1,
-  'top_k': 40,
-  'top_p': 0.95,
-  'max_output_tokens': 1024,
-  'stop_sequences': [],
-  'safety_settings': [{"category":"HARM_CATEGORY_DEROGATORY","threshold":"BLOCK_LOW_AND_ABOVE"},{"category":"HARM_CATEGORY_TOXICITY","threshold":"BLOCK_LOW_AND_ABOVE"},{"category":"HARM_CATEGORY_VIOLENCE","threshold":"BLOCK_MEDIUM_AND_ABOVE"},{"category":"HARM_CATEGORY_SEXUAL","threshold":"BLOCK_MEDIUM_AND_ABOVE"},{"category":"HARM_CATEGORY_MEDICAL","threshold":"BLOCK_MEDIUM_AND_ABOVE"},{"category":"HARM_CATEGORY_DANGEROUS","threshold":"BLOCK_MEDIUM_AND_ABOVE"}],
-}
+client = genai.Client(api_key="AIzaSyCliDeFpsIaE8yfin9MJWSWgoV8zxMMgDE")
 
 def generate_text(prompt):
     return f"Generated text for prompt: {prompt}"
@@ -57,13 +47,12 @@ def main():
     # Submit Button
     if st.sidebar.button("Submit"):
         prompt = generate_prompt(format_option, user_input)
-        response = genai.generate_text(
-            **defaults,
-            prompt=prompt
+        response = client.models.generate_content(
+          model="gemini-2.0-flash",
+          contents="give 10 data about scientist",
         )
-        
       
-        generated_result = response.result
+        generated_result = response.text
         
         # Display the generated result in the main area
         st.header("Generated Result:")
