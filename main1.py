@@ -6,7 +6,7 @@ from io import StringIO
 import json
 import streamlit as st
 
-client = genai.Client(api_key="AIzaSyCliDeFpsIaE8yfin9MJWSWgoV8zxMMgDE")
+client = genai.Client(api_key="AIzaSyD8zig0mh7tN2tE30VKQ9LVQzpDyU_gy3E")
 
 def generate_text(prompt):
     return f"Generated text for prompt: {prompt}"
